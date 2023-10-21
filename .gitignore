@@ -1,27 +1,16 @@
-.DS_Store
-node_modules
-/dist
+# Entorno virtual
+/venv/
+/lib/
+/site-packages/
 
+# Archivo de dependencias
+requirements.txt
 
-# local env files
-.env.local
-.env.*.local
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-*local_settings-py
+# Archivos de configuración del entorno
+.env
+.envrc
+Pipfile
+Pipfile.lock
 
 # Archivos de caché y temporales
 __pycache__/
@@ -31,17 +20,19 @@ __pycache__/
 .eggs/
 
 # Archivos de configuración de IDEs/editores
-.vscode/
-.idea/
-*.iml
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*local_settings-py
+
+# Archivos específicos de Python
+__pycache__/
 *.pyc
 *.pyo
-*.pyd
-*.bak
-*.swp
-*.db
-*.sqlite3
-.pytest_cache/
 
 # Archivos de sistema y configuraciones locales
 .DS_Store
@@ -53,3 +44,9 @@ __pycache__/
 # Archivos de registro y salidas de aplicaciones
 logs/
 *.log
+
+# Directorio de Node.js y dependencias JavaScript
+node_modules/
+
+# Directorio de distribución
+/dist
