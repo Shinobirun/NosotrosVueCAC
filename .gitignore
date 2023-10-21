@@ -21,3 +21,35 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*local_settings-py
+
+# Archivos de caché y temporales
+__pycache__/
+*.pyc
+*.pyo
+.cache/
+.eggs/
+
+# Archivos de configuración de IDEs/editores
+.vscode/
+.idea/
+*.iml
+*.pyc
+*.pyo
+*.pyd
+*.bak
+*.swp
+*.db
+*.sqlite3
+.pytest_cache/
+
+# Archivos de sistema y configuraciones locales
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos de registro y salidas de aplicaciones
+logs/
+*.log
