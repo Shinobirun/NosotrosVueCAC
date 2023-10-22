@@ -1,9 +1,7 @@
 from django.shortcuts import render
-
-# Create your views here.
-from rest_framework import generics
 from .models import Usuario, PaqueteTuristico, HistorialViajes
 from .serializers import UsuarioSerializer, PaqueteTuristicoSerializer, HistorialViajesSerializer
+from rest_framework import generics
 
 class UsuarioListView(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -16,3 +14,4 @@ class PaqueteTuristicoListView(generics.ListCreateAPIView):
 class HistorialViajesListView(generics.ListCreateAPIView):
     queryset = HistorialViajes.objects.all()
     serializer_class = HistorialViajesSerializer
+
