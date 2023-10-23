@@ -6,6 +6,7 @@ class Usuario(models.Model):
     mail = models.EmailField(max_length=200, unique=True)
     password = models.CharField(max_length=50)
     puntos = models.DecimalField(max_digits=10, decimal_places=0)
+    tipo = models.CharField(max_length=50, null=True, blank=True) 
 
 class PaqueteTuristico(models.Model):
     titulo = models.CharField(max_length=100)
