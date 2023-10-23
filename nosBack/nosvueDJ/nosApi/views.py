@@ -15,3 +15,10 @@ class HistorialViajesListView(generics.ListCreateAPIView):
     queryset = HistorialViajes.objects.all()
     serializer_class = HistorialViajesSerializer
 
+class UsuarioDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+
+class PaqueteTuristicoDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PaqueteTuristico.objects.all()
+    serializer_class = PaqueteTuristicoSerializer
