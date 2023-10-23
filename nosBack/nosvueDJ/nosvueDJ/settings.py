@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -79,11 +80,11 @@ WSGI_APPLICATION = 'nosvueDJ.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bazgbtaokf95gtsgku9w',
-        'USER': 'ufrq1mwiwp71sjtb',
-        'PASSWORD': 'hBnkpNq7RYRSnKFvpMLm',
-        'HOST': 'bazgbtaokf95gtsgku9w-mysql.services.clever-cloud.com',
-        'PORT': '3306',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT'),
     }
 }
 
