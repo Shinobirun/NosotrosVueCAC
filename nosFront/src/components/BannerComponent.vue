@@ -1,7 +1,8 @@
   <template>
     <section class="banner">
       <!-- Contenido del banner -->
-      <img src="../assets/images/welcome-aboard-2334166_1280.jpg" alt="Banner de promoción">
+        <h1>Viaja con Nosotros aprovecha nuestras ofertas, unite y se viajero VIP</h1>
+     
     </section>
   </template>
 
