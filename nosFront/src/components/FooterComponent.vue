@@ -12,7 +12,7 @@
             <a href="#"><img src="../assets/images/icons/twit.png" alt="Twitter">  Twitter</a>
           </li>
           <li>
-            <a href="#"><img src="../assets/images/icons/inst.png" alt="Intagram">  Instagram</a>
+            <a href="#"><img src="../assets/images/icons/inst.png" alt="Instagram">  Instagram</a>
           </li>
         </ul>
       </div>
@@ -22,7 +22,7 @@
           <img src="../assets/images/icons/phone.png" alt="Telefono"> Teléfono: 123-456-789
         </p>
         <p>
-          <img src="../assets/images/icons/mail.png" alt="Mail"> Correo electrónico: info@tudominio.com
+          <img src="../assets//images/icons/mail.png" alt="Mail"> Correo electrónico: nosotrosMunTurismo@gmail.com
         </p>
       </div>
     </div>
@@ -39,7 +39,7 @@ export default {
     return {
       colorPrimary: '#bbb737f8',
     };
-  },
+  }
 }
 </script>
 
@@ -47,11 +47,11 @@ export default {
 /* Estilos específicos del pie de página */
 footer {
   background-color: var(--color-accent);
-  opacity: .7;
+  opacity: 0.7;
   color: var(--color-primary);
   padding: 10px 5px;
   padding-left: 5%; /* Espacio a la izquierda */
-  padding-right: 5%;  
+  padding-right: 5%;
 }
 
 .foot {
@@ -94,6 +94,5 @@ a img, p img {
 
 img {
   height: 25px;
- 
 }
 </style>
