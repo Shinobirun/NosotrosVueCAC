@@ -7,6 +7,10 @@ export default {
   get(resource) {
     return axios.get(`${BASE_URL}/${resource}`);
   },
+  
+  getPaquetesPorTipo(tipo) {
+    return axios.get(`${BASE_URL}/paquetes/?tipo=${tipo}`);
+  },
 
   // Función para hacer una solicitud POST
   post(resource, data) {
