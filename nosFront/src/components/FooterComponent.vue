@@ -3,7 +3,7 @@
     <div class="foot">
       <div>
         <h3 class="title">¡Síguenos en las redes sociales!</h3>
-        <p>Descubre las mejores ofertas y destinos.</p>
+        
         <ul>
           <li>
             <a href="#"><img src="../assets/images/icons/fac.png" alt="Facebook">  Facebook</a>
@@ -19,10 +19,13 @@
       <div>
         <h3 class="title">Contacto</h3>
         <p>
-          <img src="../assets/images/icons/phone.png" alt="Telefono"> Teléfono: 123-456-789
+          <img src="../assets/images/icons/phone.png" alt="Telefono"> Teléfono: 11-4546-7849
         </p>
         <p>
           <img src="../assets/images/icons/mail.png" alt="Mail"> Correo electrónico: info@tudominio.com
+        </p>
+        <p>
+            <a href="#"><img src="../assets/images/icons/inst.png" alt="Intagram">  Tik Tok</a>
         </p>
       </div>
     </div>
@@ -46,12 +49,12 @@ export default {
 <style scoped>
 /* Estilos específicos del pie de página */
 footer {
-  background-color: var(--color-accent);
-  opacity: .7;
+  background-color: #f8f8f8;
   color: var(--color-primary);
   padding: 10px 5px;
   padding-left: 5%; /* Espacio a la izquierda */
   padding-right: 5%;  
+
 }
 
 .foot {
