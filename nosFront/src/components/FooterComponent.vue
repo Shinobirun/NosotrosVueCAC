@@ -97,6 +97,36 @@ a img, p img {
 
 img {
   height: 25px;
- 
+}
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+  footer {
+    padding: 10px; 
+  }
+  .foot {
+    flex-direction: column; 
+  }
+  ul li {
+    margin-bottom: 0; 
+  }
+}
+/* Media query para pantallas medianas */
+@media (min-width: 769px) and (max-width: 1024px) {
+  footer {
+    padding: 15px; 
+  }
+  .foot {
+    flex-direction: row;
+  }
+  ul li {
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+}
+/* Media query para pantallas grandes */
+@media (min-width: 1025px) {
+  footer {
+    padding: 20px; 
+  }
 }
 </style>
