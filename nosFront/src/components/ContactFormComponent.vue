@@ -88,7 +88,6 @@
 
 <style scoped>
 .contenedor {
-  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,20 +99,21 @@
   color: var(--color-text1);
   width: 80%;
   padding: 30px;
+  margin: 0 auto; /* Centra horizontalmente el formulario */
+  z-index: 1;
 }
 
 .iframe {
   background-color: var(--color-backForm1);
   width: 98.5%;
   padding: 10px;
-  
+  margin: 0 auto;
 }
 
 .iframe iframe {
   width: 100%;
-  
+  height: auto; /* Ajusta la altura al contenido automáticamente */
 }
-
 
 button {
   background-color: var(--color-primary);
@@ -127,7 +127,6 @@ button:hover {
   background-color: var(--color-secondary);
 }
 
-
 input:hover,
 textarea:hover {
   filter: brightness(1.1); 
@@ -138,9 +137,7 @@ textarea:hover {
   padding-left: 10px;
   background-color: var(--color-accent);
   opacity: .3;
-    
 }
-
 
 input,
 textarea {
@@ -149,16 +146,14 @@ textarea {
   margin: 10px 0;
   font-size: 16px;
   transition: filter 0.3s; /* Transición suave en el hover */
-  color:black;
+  color: black;
   opacity: 1;
 }
-
-
 
 h2 {
   margin: 20px 0;
   text-align: center; 
-  color:var()
+   color: var(--color-text2);  /*Asegúrate de definir un color  */
 }
 
 .whatsapp-button {
@@ -170,6 +165,23 @@ h2 {
 .whatsapp-button img {
   width: 50px; 
 }
+/* Media query para pantallas medianas y grandes */
+@media screen and (min-width: 769px) {
+  .formulario {
+    width: 95%;
+    margin-top: 0; 
+    margin-bottom: 0; 
+  }
+}
 
+/* Media query para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  .formulario {
+    width: 95%; 
+    max-height: 80vh;
+    margin-top: 10px; 
+     margin-bottom: 80px;  
+  }
+
+}
 </style>
-  
