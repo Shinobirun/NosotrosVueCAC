@@ -9,7 +9,6 @@
   </section>
 </template>
 
-
 <script>
 import ApiService from '../servicios/apiService'; 
 
@@ -21,7 +20,8 @@ export default {
     };
   },
   created() {
-    ApiService.get('paquetes/')
+    const tipoDePaquete = 'tours'; // Especifica el tipo de paquete que deseas obtener
+    ApiService.getPaquetesPorTipo(tipoDePaquete)
       .then(response => {
         this.offers = response.data;
       })
