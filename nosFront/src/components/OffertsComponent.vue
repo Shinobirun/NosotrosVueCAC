@@ -1,107 +1,85 @@
 <template>
-  <section class="offerts">
-    <h2>Ofertas de Paquetes Turísticos</h2>
-    <div v-for="(oferta, index) in ofertas" :key="index" class="offert">
-      <img :src="oferta.imagen" :alt="'Oferta ' + (index + 1)">
-      <h3>{{ oferta.titulo }}</h3>
-      <p>{{ oferta.descripcion }}</p>
-      <button @click="verDetalles(oferta)">Ver más</button>
+  <section class="offers">
+    <div v-for="offer in offers" :key="offer.id" class="offer">
+      <img :src="require(`../assets/images/${offer.foto_url}`)" :alt="`Oferta ${offer.id}`">
+      <h3>{{ offer.titulo }}</h3>
+      <p>{{ offer.informacion }}</p>
+      <a :href="`./pages/${offer.tipo.toLowerCase()}.html?id=${offer.id}`">Ver más</a>
     </div>
   </section>
 </template>
+
 
 <script>
 import ApiService from '../servicios/apiService'; 
 
 export default {
-  name: 'OffertComponent',
+  name: 'OfferComponent',
   data() {
     return {
-      ofertas: [],
+      offers: [],
     };
   },
   created() {
-    // Hacer una solicitud GET a tu API usando tu servicio
-    ApiService.get('paquetes')
+    ApiService.get('paquetes/')
       .then(response => {
-        this.ofertas = response.data;
+        this.offers = response.data;
       })
       .catch(error => {
         console.error('Error al obtener ofertas:', error);
       });
-  },
-  methods: {
-    verDetalles(oferta) {
-      console.log('Ruta de la imagen:', oferta.imagen);
-      this.$emit('ver-detalles', oferta);
-    }
   }
 }
 </script>
 
 <style scoped>
-/* Estilos específicos de la oferta */
-.offerts {
-  text-align: center;
-  margin-top: 20px;
+.offers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.offert {
-  background: rgb(23,70,162);
-  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 35%, var(--color-background) 100%);
-  color: #fff;
+.offer {
+  background-color: #f5f5f5;
   padding: 20px;
   margin: 20px;
   border-radius: 10px;
-  display: inline-block;
-  width: calc(33.33% - 40px);
-  opacity: .8;
+  width: 300px;
 }
 
-.offert h3 {
+.offer h3 {
   font-size: 1.5rem;
   margin: 10px 0;
-  animation: cambiaColor 3s linear infinite alternate;
-  -webkit-animation: cambiaColor 3s linear infinite alternate;
 }
 
-.offert p {
+.offer p {
   font-size: 1rem;
   margin: 10px 0;
 }
 
-.offert img {
+.offer img {
   max-width: 100%;
   height: auto;
-  width: 100%; 
+  width: 100%;
   max-height: 200px;
 }
 
-@keyframes cambiaColor {
-  0% {
-    color: #0404ff;
-  }
-  50% {
-    color: #fdfdf8
-  }
-  100% {
-    color: #0f0102;
-  }
-}
-
-.offert:hover {
-  opacity: 1;
-}
-
-.offert button {
-  color: var(--color-primary);
+.offer a {
+  display: block;
+  color: #333;
   text-decoration: none;
   font-weight: bold;
+  background-color: #fff;
+  border: 1px solid #333;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
-.offert button:hover {
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: bold;
+.offer a:hover {
+  background-color: #333;
+  color: #fff;
 }
 </style>
