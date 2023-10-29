@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import ApiService from '../servicios/apiService'; // Asegúrate de tener la ruta correcta hacia tu servicio
+import ApiService from '../servicios/apiService'; 
 
 export default {
   name: 'OffertComponent',
@@ -22,7 +22,7 @@ export default {
   },
   created() {
     // Hacer una solicitud GET a tu API usando tu servicio
-    ApiService.get('api/paquetes')
+    ApiService.get('paquetes')
       .then(response => {
         this.ofertas = response.data;
       })
