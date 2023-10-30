@@ -49,8 +49,8 @@ export default {
 <style scoped>
 /* Estilos específicos del pie de página */
 footer {
-  background-color: #f8f8f8;
-  color: var(--color-primary);
+  background-color: #524438;
+  color: #ffff;
   padding: 10px 5px;
   padding-left: 5%; /* Espacio a la izquierda */
   padding-right: 5%;  
@@ -74,7 +74,7 @@ ul li {
 
 a {
   text-decoration: none;
-  color: var(--color-primary);
+  color: #ffff;
   opacity: 1;
 }
 

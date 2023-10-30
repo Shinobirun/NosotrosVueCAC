@@ -18,9 +18,9 @@ export default {
 /* Estilos específicos del banner */
 .banner {
   text-align: center;
-  padding: 100px 0;
-  background-color: #f8f8f8; /* Color de fondo suave */
-  border-bottom: 1px solid #e0e0e0; /* Línea divisoria */
+  padding: 50px 0;
+  background-color: ##f09012; /* Color de fondo suave */
+  /*border-bottom: 1px solid #e0e0e0; /* Línea divisoria */
 }
 
 .banner-content {
