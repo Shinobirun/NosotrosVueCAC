@@ -1,29 +1,40 @@
 <template>
   <section class="offers">
-    <div v-for="offer in offers" :key="offer.id" class="offer">
-      <img :src="require(`../assets/images/${offer.foto_url}`)" :alt="`Oferta ${offer.id}`">
-      <h3>{{ offer.titulo }}</h3>
-      <p>{{ offer.informacion }}</p>
-      <a :href="`./pages/${offer.tipo.toLowerCase()}.html?id=${offer.id}`">Ver más</a>
+    <div class="loader-container" v-if="loading">
+      <LoaderComponet />
+    </div>
+    <div v-else class="offer-container">
+      <div v-for="offer in offers" :key="offer.id" class="offer">
+        <img :src="require(`../assets/images/${offer.foto_url}`)" :alt="`Oferta ${offer.id}`">
+        <h3>{{ offer.titulo }}</h3>
+        <p>{{ offer.informacion }}</p>
+        <a :href="`./pages/${offer.tipo.toLowerCase()}.html?id=${offer.id}`">Ver más</a>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
 import ApiService from '../servicios/apiService'; 
+import LoaderComponet from './LoaderComponet.vue';
 
 export default {
   name: 'OfferComponent',
+  components: {
+    LoaderComponet
+  },
   data() {
     return {
       offers: [],
+      loading: true
     };
   },
   created() {
-    const tipoDePaquete = 'tours'; // Especifica el tipo de paquete que deseas obtener
+    const tipoDePaquete = 'tours'; 
     ApiService.getPaquetesPorTipo(tipoDePaquete)
       .then(response => {
         this.offers = response.data;
+        this.loading = false;
       })
       .catch(error => {
         console.error('Error al obtener ofertas:', error);
@@ -34,6 +45,19 @@ export default {
 
 <style scoped>
 .offers {
+  text-align: center;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+
+
+.offer-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -45,6 +69,8 @@ export default {
   margin: 20px;
   border-radius: 10px;
   width: 300px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .offer h3 {
