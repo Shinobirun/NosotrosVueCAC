@@ -50,7 +50,7 @@
         display: grid;
         grid-template-columns: 1fr auto; /* Divide el espacio en dos columnas, una para el logo y otra para el menú */
         align-items: center; /* Centra verticalmente los elementos en el header */
-        background-color: var(--color-accent);
+        background-color: #008E75;
         opacity: 1;
         padding: 10px 0;
        
@@ -84,7 +84,7 @@
 
     a {
         text-decoration: none;
-        color: var(--color-primary); /* Color del texto del menú */
+        color: #ffff;
         font-weight: bold;
         
     }

@@ -58,7 +58,8 @@ data() {
 font-family: 'Roboto', sans-serif;
 margin: 0;
 padding: 0;
-background-image: url('../assets/images/playaMuelle.jpg');
+/*background-image: url('../assets/images/playaMuelle.jpg');*/
+background-color: #f09012;
 background-size: cover; /* Ajusta la imagen al tamaño del viewport */
 background-attachment: fixed; /* Fija la imagen de fondo para que no se desplace con el contenido */
 }
