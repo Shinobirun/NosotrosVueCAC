@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import ApiService from '../servicios/apiService'; 
+import ApiService from '../services/apiService'; 
 import LoaderComponet from './LoaderComponet.vue';
 
 export default {
