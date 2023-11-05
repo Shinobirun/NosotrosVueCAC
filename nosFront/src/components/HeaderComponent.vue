@@ -118,7 +118,7 @@
     .bar {
       width: 25px;
       height: 3px;
-      background-color: #Ff731d ;
+      background-color: #f09012 ;
       margin: 5px auto;
       transition: 0.4s;
     }
