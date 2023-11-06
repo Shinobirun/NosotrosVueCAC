@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Usuario, PaqueteTuristico, HistorialViajes
 from .serializers import UsuarioSerializer, PaqueteTuristicoSerializer, HistorialViajesSerializer
 from rest_framework import generics
+from django.http import JsonResponse
 
 class UsuarioListView(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -35,3 +36,11 @@ class UsuarioDetailView(generics.RetrieveUpdateDestroyAPIView):
 class PaqueteTuristicoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PaqueteTuristico.objects.all()
     serializer_class = PaqueteTuristicoSerializer
+
+def verificar_email_existente(request):
+    if request.method == 'GET':
+        email = request.GET.get('email')
+        if Usuario.objects.filter(mail=email).exists():
+            return JsonResponse({'existe': True})
+        else:
+            return JsonResponse({'existe': False})
