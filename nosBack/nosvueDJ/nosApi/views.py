@@ -3,6 +3,8 @@ from .models import Usuario, PaqueteTuristico, HistorialViajes
 from .serializers import UsuarioSerializer, PaqueteTuristicoSerializer, HistorialViajesSerializer
 from rest_framework import generics
 from django.http import JsonResponse
+from django.contrib.auth import authenticate, login
+
 
 class UsuarioListView(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -44,3 +46,15 @@ def verificar_email_existente(request):
             return JsonResponse({'existe': True})
         else:
             return JsonResponse({'existe': False})
+        
+def iniciar_sesion(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        contrasena = request.POST.get('contrasena')
+        user = authenticate(request, username=email, password=contrasena)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'mensaje': 'Inicio de sesión exitoso'})
+        else:
+            return JsonResponse({'mensaje': 'Correo electrónico o contraseña incorrectos'}, status=400)
+    return JsonResponse({'mensaje': 'Método no permitido'}, status=405)

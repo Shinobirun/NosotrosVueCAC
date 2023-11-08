@@ -4,7 +4,7 @@
         <div class="modal-content">
             <h2>Iniciar Sesión</h2>
             <!-- Agrega tus campos de inicio de sesión aquí -->
-            <input type="text" placeholder="Usuario">
+            <input type="text" name="email" placeholder="Correo electrónico">
             <input type="password" placeholder="Contraseña">
             <button @click="iniciarSesion">Iniciar Sesión</button>
             <button @click="cerrarModal">Cerrar</button>
@@ -13,6 +13,10 @@
   </template>
   
   <script>
+
+  import axios from 'axios';
+
+
   export default {
   name: 'LoginModalComponent',
   data() {
@@ -24,14 +28,27 @@
     cerrarModal() {
       this.$emit('close');
     },
-    iniciarSesion() {
-      // Agregar la lógica para autenticar al usuario
-      // enviar una solicitud HTTP a tu backend
-      // y manejar la respuesta
-      alert('Iniciando sesión...');
+    async iniciarSesion() {
+      const usuario = document.querySelector('input[type="text"]').value;
+      const contrasena = document.querySelector('input[type="password"]').value;
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/iniciar_sesion/', {
+          usuario,
+          contrasena
+        });
+        alert(response.data.mensaje);
+        // Si el inicio de sesión es exitoso, puedes cerrar el modal o redirigir al usuario a otra página
+        if (response.status === 200) {
+          this.cerrarModal();
+        }
+      } catch (error) {
+        alert('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+      }
     }
   }
 }
+
+
   
   </script>
   
@@ -50,9 +67,10 @@
 }
 
 .modal-content {
-  background: #fff;
+  background: #f09012;
   padding: 20px;
   border-radius: 8px;
+  border-color: blue;
   text-align: center;
 }
 
