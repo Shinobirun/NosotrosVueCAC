@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
+from rest_framework.response import Response
 
 
 class UsuarioListView(generics.ListCreateAPIView):
@@ -51,31 +52,27 @@ def verificar_email_existente(request):
             return JsonResponse({'existe': False})
         
 @api_view(['POST'])
-@permission_classes([AllowAny])   #Permite el acceso a esta vista sin autentificación      
-        
+@permission_classes([AllowAny])
 def iniciar_sesion(request):
     if request.method == 'POST':
         email = request.data.get('email')
-        contrasena = request.data.get('contrasena')
-        user = authenticate(request, username=email, password=contrasena)
+        password = request.data.get('password')
+
+        user = authenticate(request, username=email, password=password)
 
         if user is not None:
-            # Autenticación exitosa, generar tokens
+            login(request, user)
+
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
             refresh_token = str(refresh)
 
-            # Puedes guardar estos tokens en el frontend (por ejemplo, en el local storage)
-            # y enviar el access_token con cada solicitud posterior para autenticar al usuario
-
-            login(request, user)
-            return JsonResponse({
+            return Response({
                 'mensaje': 'Inicio de sesión exitoso',
                 'access_token': access_token,
                 'refresh_token': refresh_token,
             })
-        else:
-            return JsonResponse({'mensaje': 'Correo electrónico o contraseña incorrectos'}, status=400)
 
-    return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
+        return Response({'mensaje': 'Correo electrónico o contraseña incorrectos'}, status=400)
 
+    return Response({'mensaje': 'Método no permitido'}, status=405)

@@ -3,7 +3,7 @@
     <div class="registration-container">
       <div class="registration-form">
         <h2>Forma parte de Nosotros</h2>
-        <form @submit="handleSubmit"> <!-- Añadido el evento @submit -->
+        <form @submit="handleSubmit"> 
           <label for="nombre">Nombre:</label>
           <input type="text" id="nombre" name="nombre" required>
 
