@@ -1,9 +1,9 @@
-from .models import Usuario, PaqueteTuristico, HistorialViajes
+from .models import UserProfile, PaqueteTuristico, HistorialViajes
 from rest_framework import serializers
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Usuario
+        model = UserProfile
         fields = '__all__'
 
 class PaqueteTuristicoSerializer(serializers.ModelSerializer):

@@ -1,13 +1,16 @@
 from django.shortcuts import render
-from .models import Usuario, PaqueteTuristico, HistorialViajes
+from .models import UserProfile, PaqueteTuristico, HistorialViajes
 from .serializers import UsuarioSerializer, PaqueteTuristicoSerializer, HistorialViajesSerializer
-from rest_framework import generics
+from rest_framework  import generics
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 
 
 class UsuarioListView(generics.ListCreateAPIView):
-    queryset = Usuario.objects.all()
+    queryset = UserProfile.objects.all()
     serializer_class = UsuarioSerializer
 
 class PaqueteTuristicoListView(generics.ListCreateAPIView):
@@ -32,7 +35,7 @@ class HistorialViajesListView(generics.ListCreateAPIView):
     serializer_class = HistorialViajesSerializer
 
 class UsuarioDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Usuario.objects.all()
+    queryset = UserProfile.objects.all()
     serializer_class = UsuarioSerializer
 
 class PaqueteTuristicoDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -42,19 +45,37 @@ class PaqueteTuristicoDetailView(generics.RetrieveUpdateDestroyAPIView):
 def verificar_email_existente(request):
     if request.method == 'GET':
         email = request.GET.get('email')
-        if Usuario.objects.filter(mail=email).exists():
+        if UserProfile.objects.filter(mail=email).exists():
             return JsonResponse({'existe': True})
         else:
             return JsonResponse({'existe': False})
         
+@api_view(['POST'])
+@permission_classes([AllowAny])   #Permite el acceso a esta vista sin autentificación      
+        
 def iniciar_sesion(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        contrasena = request.POST.get('contrasena')
+        email = request.data.get('email')
+        contrasena = request.data.get('contrasena')
         user = authenticate(request, username=email, password=contrasena)
+
         if user is not None:
+            # Autenticación exitosa, generar tokens
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+            refresh_token = str(refresh)
+
+            # Puedes guardar estos tokens en el frontend (por ejemplo, en el local storage)
+            # y enviar el access_token con cada solicitud posterior para autenticar al usuario
+
             login(request, user)
-            return JsonResponse({'mensaje': 'Inicio de sesión exitoso'})
+            return JsonResponse({
+                'mensaje': 'Inicio de sesión exitoso',
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+            })
         else:
             return JsonResponse({'mensaje': 'Correo electrónico o contraseña incorrectos'}, status=400)
+
     return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
+

@@ -8,11 +8,25 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem('token'); 
+    const token = sessionStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  (response) => {
+    // Manejar la respuesta y extraer el token si es necesario
+    const token = response.data.access; // Ajusta esto según la estructura de tu respuesta
+    if (token) {
+      sessionStorage.setItem('token', token);
+    }
+    return response;
   },
   (error) => {
     return Promise.reject(error);
