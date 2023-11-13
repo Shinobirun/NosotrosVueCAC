@@ -19,18 +19,19 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
-  (response) => {
-    // Manejar la respuesta y extraer el token si es necesario
-    const token = response.data.access; // Ajusta esto según la estructura de tu respuesta
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem('token');
     if (token) {
-      sessionStorage.setItem('token', token);
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return response;
+    config.headers['Content-Type'] = 'application/json'; // Agrega esta línea
+    return config;
   },
   (error) => {
     return Promise.reject(error);
   }
 );
+
 
 export default axiosInstance;

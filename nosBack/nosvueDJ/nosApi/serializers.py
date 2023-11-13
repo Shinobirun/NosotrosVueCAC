@@ -15,3 +15,7 @@ class HistorialViajesSerializer(serializers.ModelSerializer):
     class Meta:
         model = HistorialViajes
         fields = '__all__'        
+
+class ApiTokenObtainPairSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=255, required=True, label="Username")
+    description = serializers.CharField(max_length=255, required=True, label="Password")
