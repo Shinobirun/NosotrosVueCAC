@@ -3,37 +3,49 @@
         <!-- Contenido de inicio de sesión -->
         <div class="modal-content">
             <h2>Iniciar Sesión</h2>
-            <!-- Agrega tus campos de inicio de sesión aquí -->
-            <input type="text" placeholder="Usuario">
+            <input type="text" name="email" placeholder="Correo electrónico">
             <input type="password" placeholder="Contraseña">
             <button @click="iniciarSesion">Iniciar Sesión</button>
             <button @click="cerrarModal">Cerrar</button>
         </div>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
+  import axiosInstance from '@/services/interceptorService';
+
   export default {
-  name: 'LoginModalComponent',
-  data() {
-    return {
-      mostrarModal: false
-    };
-  },
+    name: 'LoginModalComponent',
+    data() {
+      return {
+        mostrarModal: false
+      };
+    },
   methods: {
     cerrarModal() {
       this.$emit('close');
     },
-    iniciarSesion() {
-      // Agregar la lógica para autenticar al usuario
-      // enviar una solicitud HTTP a tu backend
-      // y manejar la respuesta
-      alert('Iniciando sesión...');
+    async iniciarSesion() {
+      const usuario = document.querySelector('input[type="text"]').value;
+      const contrasena = document.querySelector('input[type="password"]').value;
+      try {
+        const response = await axiosInstance.post('api/token/', {
+          username: usuario,
+          password: contrasena
+        });
+        alert('Inicio de sesión exitoso');
+        // Si el inicio de sesión es exitoso, puedes cerrar el modal o redirigir al usuario a otra página
+        if (response.status === 200) {
+          this.cerrarModal();
+        }
+      } catch (error) {
+        alert('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+      }
     }
   }
-}
-  
-  </script>
+};
+</script>
+
   
   <style scoped>
   /* Estilos para el modal */
@@ -41,8 +53,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* Aprovecha todo el ancho del viewport */
-  height: 100%; /* Aprovecha toda la altura del viewport */
+  width: 100%; 
+  height: 100%; 
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center; /* Centra horizontalmente */
@@ -50,9 +62,10 @@
 }
 
 .modal-content {
-  background: #fff;
+  background: #f09012;
   padding: 20px;
   border-radius: 8px;
+  border-color: blue;
   text-align: center;
 }
 
