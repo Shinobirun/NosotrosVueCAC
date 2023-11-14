@@ -4,7 +4,7 @@
     <div class="modal-content">
       <h2>Iniciar Sesión</h2>
       <form @submit.prevent="iniciarSesion">
-        <input v-model="email" type="text" name="email" placeholder="Correo electrónico">
+        <input v-model="username" type="text" name="username" placeholder="Nombre de usuario">
         <input v-model="password" type="password" placeholder="Contraseña">
         <button type="submit">Iniciar Sesión</button>
       </form>
@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       mostrarModal: false,
-      email: '',
+      username: '',
       password: ''
     };
   },
@@ -32,22 +32,24 @@ export default {
     async iniciarSesion() {
       try {
         const response = await axiosInstance.post('iniciar_sesion/', {
-          email: this.email,
+          username: this.username,
           password: this.password
         });
 
-        console.log(response.data);
-        // Si el inicio de sesión es exitoso, puedes cerrar el modal o redirigir al usuario a otra página
-        if (response.status === 200) {
+        console.log('Datos de inicio de sesión:', this.username, this.password);
+        console.log('Respuesta del servidor:', response.data);
+
+        if (response.status >= 200 && response.status < 300) {
           this.cerrarModal();
         }
       } catch (error) {
+        console.error('Error en la respuesta:', error.response);
+
         if (error.response && error.response.status === 400) {
-          alert('Correo electrónico o contraseña incorrectos.');
+          alert(`Error: ${error.response.data.mensaje || 'Nombre de usuario o contraseña incorrectos.'}`);
         } else {
           alert('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
         }
-        console.error(error);
       }
     }
   }
@@ -60,8 +62,8 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center; /* Centra horizontalmente */

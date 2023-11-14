@@ -1,20 +1,21 @@
-from .models import UserProfile, PaqueteTuristico, HistorialViajes
+from django.contrib.auth.models import User  
 from rest_framework import serializers
+from .models import User, PaqueteTuristico, HistorialViajes
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserProfile
+        model = User  
         fields = '__all__'
 
 class PaqueteTuristicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaqueteTuristico
-        fields= '__all__'
+        fields = '__all__'
 
 class HistorialViajesSerializer(serializers.ModelSerializer):
     class Meta:
         model = HistorialViajes
-        fields = '__all__'        
+        fields = '__all__'
 
 class ApiTokenObtainPairSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=255, required=True, label="Username")
