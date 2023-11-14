@@ -15,22 +15,20 @@ from decouple import config
 from dotenv import load_dotenv
 from datetime import timedelta
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#Variable de entorno
+# Variable de entorno
 load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # Configuración de AUTH_USER_MODEL antes de importar otros módulos que lo utilicen
-AUTH_USER_MODEL = 'nosApi.UserProfile'
-
+AUTH_USER_MODEL = 'auth.User'
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY'),
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -68,26 +66,17 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:8000',
     'http://localhost:8080',
-    
 ]
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://127.0.0.1:8000',
     'http://localhost:8080',
-    
 ]
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
-
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Configura el tiempo de vida del token según tus necesidades
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),  # Opciones de renovación del token
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
     'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(days=1),
     'SLIDING_TOKEN_REFRESH_MAX_USES': None,
     'SLIDING_TOKEN_REFRESH_BLACKLIST_AFTER_REFRESH': False,
@@ -98,15 +87,12 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
-
-
-
 ROOT_URLCONF = 'nosvueDJ.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,8 +105,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'nosvueDJ.wsgi.application'
 
+WSGI_APPLICATION = 'nosvueDJ.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -135,7 +121,6 @@ DATABASES = {
         'PORT': config('DATABASE_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -155,13 +140,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 AUTHENTICATION_CLASSES = [
     'rest_framework_simplejwt.authentication.JWTAuthentication',
 ]
 
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -174,7 +159,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -184,8 +168,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -210,4 +192,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_GRACE_PERIOD': timedelta(days=1),
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
 }
+
+LOGIN_URL = 'api/accounts/login/'
+
+LOGIN_REDIRECT_URL = '/'
 

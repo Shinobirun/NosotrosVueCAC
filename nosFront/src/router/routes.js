@@ -5,7 +5,8 @@ import RegistroView from '@/views/RegistroView.vue';
 import ContactoView from '@/views/ContactoView.vue';
 import ToursView from '@/views/ToursView.vue';
 import RelaxComponent from '../components/RelaxComponent.vue';
-import RomanticComponent from '../components/RomanticComponent.vue';
+import RomanticComponent from '../components/RomanticComponent.vue'
+import LoginModalComponent from '../components/LoginModalComponent.vue'
 
 const routes = [
   {
@@ -16,17 +17,17 @@ const routes = [
   {
     path: '/registro',
     name: 'Registro',
-    component: RegistroView // Asegúrate de que este sea el nombre correcto del componente
+    component: RegistroView 
   },
   {
     path: '/contacto',
     name: 'Contacto',
-    component: ContactoView // Asegúrate de que este sea el nombre correcto del componente
+    component: ContactoView 
   },
   {
     path: '/tours',
     name: 'Tours',
-    component: ToursView, // Asegúrate de que este sea el nombre correcto del componente
+    component: ToursView, 
   },
   {
     path: '/:catchAll(.*)',
@@ -45,7 +46,14 @@ const routes = [
     component: RomanticComponent
   
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginModalComponent 
+  },
+  
   // Agrega más rutas aquí si es necesario
+
 ];
 
 const router = createRouter({
