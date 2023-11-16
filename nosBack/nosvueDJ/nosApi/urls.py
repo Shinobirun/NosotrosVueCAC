@@ -1,6 +1,7 @@
 from django.urls import include, path
 from .views import UsuarioListView, UsuarioDetailView, PaqueteTuristicoListView, PaqueteTuristicoDetailView, HistorialViajesListView, verificar_email_existente
 from django.contrib.auth.views import LoginView
+from rest_framework.authtoken.views import obtain_auth_token
 
 
 urlpatterns = [
@@ -10,6 +11,7 @@ urlpatterns = [
     path('paquetes/<int:pk>/', PaqueteTuristicoDetailView.as_view(), name='paquete-detail'), 
     path('viajes/', HistorialViajesListView.as_view(), name='viaje-list'),
     path('verificar-email/', verificar_email_existente, name='verificar_email_existente'),
+    path('token/', obtain_auth_token, name='api_token'),
     #path('iniciar_sesion/', iniciar_sesion, name='iniciar_sesion'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('api/accounts/login/', LoginView.as_view(template_name='registration/login.html'), name='login')

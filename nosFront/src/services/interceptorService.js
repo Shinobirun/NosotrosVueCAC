@@ -12,19 +12,6 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
     config.headers['Content-Type'] = 'application/json'; // Agrega esta línea
     return config;
   },
@@ -33,5 +20,5 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-
 export default axiosInstance;
+

@@ -50,6 +50,24 @@ def verificar_email_existente(request):
             return JsonResponse({'existe': True})
         else:
             return JsonResponse({'existe': False})
+        
+
+async function obtenerToken() {
+  try {
+    const response = await axios.post('http://tu-domino.com/api/token/', {
+      username: 'nombre_de_usuario',
+      password: 'contraseña',
+    });
+    
+    const token = response.data.access;
+    console.log('Token de acceso:', token);
+  } catch (error) {
+    console.error('Error al obtener el token:', error);
+  }
+}
+
+obtenerToken();
+
 
         
 """@api_view(['POST'])

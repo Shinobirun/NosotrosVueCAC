@@ -31,7 +31,7 @@ export default {
     },
     async iniciarSesion() {
       try {
-        const response = await axiosInstance.post('iniciar_sesion/', {
+        const response = await axiosInstance.post('api/accounts/login/', {
           username: this.username,
           password: this.password
         });
@@ -39,7 +39,9 @@ export default {
         console.log('Datos de inicio de sesión:', this.username, this.password);
         console.log('Respuesta del servidor:', response.data);
 
-        if (response.status >= 200 && response.status < 300) {
+        if (response.status === 200) {
+          // El inicio de sesión fue exitoso, puedes realizar acciones necesarias
+          console.log('Inicio de sesión exitoso:', response.data);
           this.cerrarModal();
         }
       } catch (error) {
