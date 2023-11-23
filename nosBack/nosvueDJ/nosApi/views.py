@@ -9,6 +9,24 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from rest_framework.response import Response
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def enviar_consulta(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        nombre = data.get('nombre')
+        email = data.get('email')
+        mensaje = data.get('mensaje')
+
+        subject = f'Mensaje de {nombre}'
+        message = f'Mensaje de {nombre} ({email}):\n\n{mensaje}'
+        send_mail(subject, message, 'nosotrosMunTurismo@gmail.com', ['nosotrosMunTurismo@gmail.com'])
+
+        return JsonResponse({'status': 'OK'})
 
 class UsuarioListView(generics.ListCreateAPIView):
     queryset = User.objects.all() 

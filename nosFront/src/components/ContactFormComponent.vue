@@ -40,21 +40,20 @@
 </div>
   </template>
   
+
   <script>
-
+  import axios from 'axios';
   import WhatsappComponent from './WhatsappComponent.vue';
-
-
+  
   export default {
-
     components: {
       WhatsappComponent
-  
     },
     data() {
       return {
         nombre: '',
         email: '',
+        tel: '',
         mensaje: ''
       };
     },
@@ -63,29 +62,20 @@
         const consulta = {
           nombre: this.nombre,
           email: this.email,
+          tel: this.tel,
           mensaje: this.mensaje
         };
   
-        fetch('http://localhost:8000/enviar-consulta/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(consulta)
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          // Puedes manejar la respuesta del backend aquí
-        })
-        .catch(error => console.error('Error:', error));
+        axios.post('http://localhost:8000/enviar_consulta/', consulta)
+          .then(response => {
+            console.log(response.data);
+            // Puedes manejar la respuesta del backend aquí
+          })
+          .catch(error => console.error('Error:', error));
       }
     },
-
-    
   };
   </script>
-
 <style scoped>
 .contenedor {
   
