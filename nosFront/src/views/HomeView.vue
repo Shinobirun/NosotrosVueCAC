@@ -3,8 +3,14 @@
     <HeaderComponent />
     <main>
       <BannerComponent />
-       <OffertComponent :tipoDePaquete="tipoDePaquete" @ver-detalles="mostrarDetalles" />
-      <DetailsComponent v-if="mostrarDetalles" :ofertaSeleccionada="ofertaSeleccionada" @volver="ocultarDetalles" />
+      <div v-if="!mostrarDetalles">
+        <!-- Mostrar OffertComponent solo si no se están mostrando detalles -->
+        <OffertComponent :tipoDePaquete="tipoDePaquete" @ver-detalles="mostrarDetalles" />
+      </div>
+      <div v-if="mostrarDetalles">
+        <!-- Mostrar DetailsComponent solo si se están mostrando detalles -->
+        <DetailsComponent :ofertaSeleccionada="ofertaSeleccionada" @volver="ocultarDetalles" />
+      </div>
       <WhatsappComponent></WhatsappComponent>
     </main>
     <FooterComponent />
@@ -21,27 +27,31 @@ import DetailsComponent from '@/components/DetailsComponent.vue'
 import WhatsappComponent from '@/components/WhatsappComponent.vue'
 
 export default {
-name: 'HomeView',
-components: {
-  HeaderComponent,
-  BannerComponent,
-  OffertComponent,
-  WhatsappComponent,
-  FooterComponent,
-  DetailsComponent
-},
-
-data() {
+  name: 'HomeView',
+  components: {
+    HeaderComponent,
+    BannerComponent,
+    OffertComponent,
+    WhatsappComponent,
+    FooterComponent,
+    DetailsComponent
+  },
+  props: {
+    tipoDePaquete: {
+      type: String,
+      default: 'tours'
+    }
+  },
+  data() {
     return {
       mensaje: 'Componente Turismo',
       mostrarDetalles: false,
       ofertaSeleccionada: null,
-      tipoDePaquete: 'tours', 
     };
   },
   methods: {
     mostrarDetails(oferta) {
-      this.mostrarDetalles = true;  
+      this.mostrarDetalles = true;
       this.ofertaSeleccionada = oferta;
     },
     ocultarDetalles() {
