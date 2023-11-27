@@ -3,7 +3,7 @@
     <HeaderComponent />
     <main>
       <BannerComponent />
-      <OffertComponent @ver-detalles="mostrarDetalles" />
+       <OffertComponent :tipoDePaquete="tipoDePaquete" @ver-detalles="mostrarDetalles" />
       <DetailsComponent v-if="mostrarDetalles" :ofertaSeleccionada="ofertaSeleccionada" @volver="ocultarDetalles" />
       <WhatsappComponent></WhatsappComponent>
     </main>
@@ -35,7 +35,8 @@ data() {
     return {
       mensaje: 'Componente Turismo',
       mostrarDetalles: false,
-      ofertaSeleccionada: null
+      ofertaSeleccionada: null,
+      tipoDePaquete: 'tours', 
     };
   },
   methods: {

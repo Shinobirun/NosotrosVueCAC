@@ -1,7 +1,7 @@
 <template>
   <section class="offers">
     <div class="loader-container" v-if="loading">
-      <LoaderComponet />
+      <LoaderComponent />
     </div>
     <div v-else class="offer-container">
       <div v-for="offer in offers" :key="offer.id" class="offer">
@@ -15,33 +15,48 @@
 </template>
 
 <script>
-import ApiService from '../services/apiService'; 
-import LoaderComponet from './LoaderComponet.vue';
+import ApiService from '../services/apiService';
+import LoaderComponent from './LoaderComponet.vue';
 
 export default {
   name: 'OfferComponent',
   components: {
-    LoaderComponet
+    LoaderComponent,
   },
   data() {
     return {
       offers: [],
-      loading: true
+      loading: true,
+      tipoDePaquete: null, // Agrega la propiedad tipoDePaquete
     };
   },
   created() {
-    const tipoDePaquete = 'tours'; 
-    ApiService.getPaquetesPorTipo(tipoDePaquete)
-      .then(response => {
+    // Usa this.tipoDePaquete en lugar de 'tours'
+    ApiService.getPaquetesPorTipo(this.tipoDePaquete)
+      .then((response) => {
         this.offers = response.data;
         this.loading = false;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error al obtener ofertas:', error);
       });
-  }
-}
+  },
+  watch: { 
+  tipoDePaquete: function (newTipoDePaquete) {
+    this.loading = true;
+    ApiService.getPaquetesPorTipo(newTipoDePaquete)
+      .then((response) => {
+        this.offers = response.data;
+        this.loading = false;
+      })
+      .catch((error) => {
+        console.error('Error al obtener ofertas:', error);
+      });
+    },
+  },
+};
 </script>
+
 
 <style scoped>
 .offers {
