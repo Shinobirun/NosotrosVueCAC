@@ -16,47 +16,55 @@
 
 <script>
 import ApiService from '../services/apiService';
-import LoaderComponent from './LoaderComponet.vue';
+import LoaderComponent from'./LoaderComponet.vue';
 
 export default {
   name: 'OfferComponent',
   components: {
     LoaderComponent,
   },
+  props: {
+    tipoDePaquete: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       offers: [],
       loading: true,
-      tipoDePaquete: null, // Agrega la propiedad tipoDePaquete
     };
   },
-  created() {
-    // Usa this.tipoDePaquete en lugar de 'tours'
-    ApiService.getPaquetesPorTipo(this.tipoDePaquete)
-      .then((response) => {
-        this.offers = response.data;
-        this.loading = false;
-      })
-      .catch((error) => {
-        console.error('Error al obtener ofertas:', error);
-      });
+  watch: {
+    tipoDePaquete: function (newTipoDePaquete) {
+      this.loading = true;
+      ApiService.getPaquetesPorTipo(newTipoDePaquete)
+        .then((response) => {
+          this.offers = response.data;
+          this.loading = false;
+        })
+        .catch((error) => {
+          console.error('Error al obtener ofertas:', error);
+        });
+    },
   },
-  watch: { 
-  tipoDePaquete: function (newTipoDePaquete) {
-    this.loading = true;
-    ApiService.getPaquetesPorTipo(newTipoDePaquete)
-      .then((response) => {
-        this.offers = response.data;
-        this.loading = false;
-      })
-      .catch((error) => {
-        console.error('Error al obtener ofertas:', error);
-      });
+  created() {
+    this.fetchOffers();
+  },
+  methods: {
+    fetchOffers() {
+      ApiService.getPaquetesPorTipo(this.tipoDePaquete)
+        .then((response) => {
+          this.offers = response.data;
+          this.loading = false;
+        })
+        .catch((error) => {
+          console.error('Error al obtener ofertas:', error);
+        });
     },
   },
 };
 </script>
-
 
 <style scoped>
 .offers {
@@ -69,8 +77,6 @@ export default {
   align-items: center;
   height: 50vh;
 }
-
-
 
 .offer-container {
   display: flex;

@@ -1,53 +1,74 @@
 <template>
   <div class="body">
-      <HeaderComponent />
-  <main>
-      <h1>{{ mensaje }}</h1>
-      <button @click="irAHome">Ir a Home</button>
-      <RelaxComponent></RelaxComponent> 
-      <RomanticComponent></RomanticComponent>
-  </main>
-  <FooterComponent />
+    <HeaderComponent />
+    <main>
+      <BannerComponent />
+      <div>
+        
+        <OffertComponent :tipoDePaquete="tipoDePaquete" @ver-detalles="mostrarDetalles" />
+      </div>
+      
+      <WhatsappComponent></WhatsappComponent>
+    </main>
+    <FooterComponent />
   </div>
 </template>
 
-<script>
 
-import HeaderComponent from '../components/HeaderComponent.vue';
-import FooterComponent from '../components/FooterComponent.vue'; 
-import RelaxComponent from '../components/RelaxComponent.vue';
-import RomanticComponent from '../components/RomanticComponent.vue';
+<script>  
+import HeaderComponent from '@/components/HeaderComponent.vue'
+import BannerComponent from '@/components/BannerComponent.vue'
+import OffertComponent from '@/components/OffertsComponent.vue'
+import FooterComponent from '@/components/FooterComponent.vue'
+
+import WhatsappComponent from '@/components/WhatsappComponent.vue'
 
 export default {
-name: 'ToursView',
-components: {
-  HeaderComponent,
-  FooterComponent,
-  RelaxComponent,
-  RomanticComponent,
-},
-data() {
-  return {
-    mensaje: 'Componente Turismo'
-  };
-},
-methods: {
-  irAHome() {
-    this.$router.push({ path: '/' });
+  name: 'ToursView',
+  components: {
+    HeaderComponent,
+    BannerComponent,
+    OffertComponent,
+    WhatsappComponent,
+    FooterComponent,
+    
+  },
+  props: {
+    tipoDePaquete: {
+      type: String,
+      default: 'tours'
+    }
+  },
+  data() {
+    return {
+      mensaje: 'Componente Turismo',
+      mostrarDetalles: false,
+      ofertaSeleccionada: null,
+    };
+  },
+  methods: {
+    mostrarDetails(oferta) {
+      this.mostrarDetalles = true;
+      this.ofertaSeleccionada = oferta;
+    },
+    ocultarDetalles() {
+      this.mostrarDetalles = false;
+      this.ofertaSeleccionada = null;
+    }
   }
-}
 }
 </script>
 
 <style scoped>
+/* Estilos específicos de la página de inicio */
 .body {
 
 font-family: 'Roboto', sans-serif;
 margin: 0;
 padding: 0;
-background-image: url('../assets/images/playaMuelle.jpg');
+/*background-image: url('../assets/images/playaMuelle.jpg');*/
+background-color: #f09012;
 background-size: cover; /* Ajusta la imagen al tamaño del viewport */
 background-attachment: fixed; /* Fija la imagen de fondo para que no se desplace con el contenido */
 }
-/* Estilos específicos para este componente */
 </style>
