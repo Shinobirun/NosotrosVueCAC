@@ -4,11 +4,11 @@
       <LoaderComponent />
     </div>
     <div v-else class="offer-container">
-      <div v-for="offer in offers" :key="offer.id" class="offer">
+      <div v-for="offer in filteredOffers" :key="offer.id" class="offer">
         <img :src="require(`../assets/images/${offer.foto_url}`)" :alt="`Oferta ${offer.id}`">
         <h3>{{ offer.titulo }}</h3>
         <p>{{ offer.informacion }}</p>
-        <a :href="`./pages/${offer.tipo.toLowerCase()}.html?id=${offer.id}`">Ver más</a>
+        <a :href="`./tours/${offer.tipo.toLowerCase()}.html?id=${offer.id}`">Ver más</a>
       </div>
     </div>
   </section>
@@ -28,6 +28,10 @@ export default {
       type: String,
       required: true,
     },
+    paquetesAMostrar: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -35,25 +39,27 @@ export default {
       loading: true,
     };
   },
+  computed: {
+    filteredOffers() {
+      if (this.paquetesAMostrar.length === 0) {
+        return this.offers;
+      } else {
+        return this.offers.filter(offer => this.paquetesAMostrar.includes(offer.tipo));
+      }
+    },
+  },
   watch: {
     tipoDePaquete: function (newTipoDePaquete) {
       this.loading = true;
-      ApiService.getPaquetesPorTipo(newTipoDePaquete)
-        .then((response) => {
-          this.offers = response.data;
-          this.loading = false;
-        })
-        .catch((error) => {
-          console.error('Error al obtener ofertas:', error);
-        });
+      this.fetchOffers(newTipoDePaquete);
     },
   },
   created() {
-    this.fetchOffers();
+    this.fetchOffers(this.tipoDePaquete);
   },
   methods: {
-    fetchOffers() {
-      ApiService.getPaquetesPorTipo(this.tipoDePaquete)
+    fetchOffers(tipo) {
+      ApiService.getPaquetesPorTipo(tipo)
         .then((response) => {
           this.offers = response.data;
           this.loading = false;

@@ -4,10 +4,8 @@
     <main>
       <BannerComponent />
       <div>
-        
-        <OffertComponent :tipoDePaquete="tipoDePaquete" @ver-detalles="mostrarDetalles" />
+        <OffertComponent :tipoDePaquete="tipoDePaquete" :paquetesAMostrar="paquetesAMostrar" />
       </div>
-      
       <WhatsappComponent></WhatsappComponent>
     </main>
     <FooterComponent />
@@ -36,15 +34,15 @@ export default {
   props: {
     tipoDePaquete: {
       type: String,
-      default: 'tours'
+      default: 'aventura'
     }
   },
   data() {
     return {
-      mensaje: 'Componente Turismo',
-      mostrarDetalles: false,
-      ofertaSeleccionada: null,
+      
+      paquetesAMostrar: ['aventura'], 
     };
+    
   },
   methods: {
     mostrarDetails(oferta) {

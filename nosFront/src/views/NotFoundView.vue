@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <img src="../assets/images/registro/404not2.jpg" alt="Pagina no encontrada" class="notFound">
-    <span class="loader"></span>
+    
   </div>
 </template>
 
