@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import apiService from '@/services/apiService'; // Ajusta la ruta según la ubicación de tu servicio
-
+import apiService from '@/services/apiService'; 
 export default {
   props: {
     mode: {
@@ -47,7 +46,7 @@ export default {
       default: null,
     },
     switchMode: {
-      type: Function, // Tipo correcto para una función
+      type: Function, 
       required: true,
     },
   },
@@ -105,13 +104,13 @@ export default {
 
     async confirmDelete() {
       try {
-        // Asumo que hay un campo 'id' en selectedPackage para la eliminación
+        
         await apiService.delete('paquetes', this.selectedPackage.id);
         this.$emit('deletePackage');
         this.resetFormAndSwitchMode('add');
       } catch (error) {
         console.error('Error al procesar la solicitud de eliminación:', error);
-        // Manejar el error de manera adecuada en tu aplicación
+        
       }
     },
 

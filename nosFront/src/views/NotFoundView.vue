@@ -10,7 +10,7 @@ export default {
   name: "NotFound",
   mounted() {
     setTimeout(() => {
-      this.$router.push({ name: "Home" }); // Asegúrate de que "Home" sea el nombre correcto de tu ruta de inicio
+      this.$router.push({ name: "Home" }); 
     }, 3000); // Espera 5 segundos antes de redirigir
   },
 };
@@ -19,7 +19,7 @@ export default {
 <style scoped>
 
 .container {
-  position: relative; /* Establece la posición relativa */
+  position: relative; 
   display: flex;
   flex-direction: column;
   align-items: center;
