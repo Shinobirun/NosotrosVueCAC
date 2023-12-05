@@ -22,13 +22,13 @@
         <input v-model="formData.tipo" id="tipo" placeholder="Tipo" required>
       </div>
   
-      <button type="submit" v-if="mode === 'add'">Agregar</button>
-      <button type="submit" v-else-if="mode === 'edit'">Guardar cambios</button>
+      <button class="submit-button" type="submit" v-if="mode === 'add'">Agregar</button>
+      <button class="submit-button" type="submit" v-else-if="mode === 'edit'">Guardar cambios</button>
     </form>
 
     <div v-else>
-      <button @click="confirmDelete">Confirmar Borrar</button>
-      <button @click="switchMode('edit')">Cancelar</button>
+      <button class="delete-button" @click="confirmDelete">Confirmar Borrar</button>
+      <button class="cancel-button" @click="switchMode('edit')">Cancelar</button>
     </div>
   </div>
 </template>
@@ -46,6 +46,10 @@ export default {
       type: Object,
       default: null,
     },
+    switchMode: {
+      type: Function, // Tipo correcto para una función
+      required: true,
+    },
   },
   data() {
     return {
@@ -58,21 +62,46 @@ export default {
       },
     };
   },
+  watch: {
+    selectedPackage: {
+      handler: 'updateFormData',
+      immediate: true,
+    },
+  },
   methods: {
     async handleSubmit() {
       try {
         if (this.mode === 'add') {
           await apiService.post('paquetes', this.formData);
         } else if (this.mode === 'edit') {
-          // Asumo que hay un campo 'id' en selectedPackage para la edición
+          
           await apiService.put('paquetes', this.selectedPackage.id, this.formData);
         }
         this.resetFormAndSwitchMode('add');
       } catch (error) {
         console.error('Error al procesar la solicitud:', error);
-        // Manejar el error de manera adecuada en tu aplicación
+        
       }
     },
+
+    updateFormData() {
+    if (this.selectedPackage) {
+      
+      if (this.mode === 'edit') {
+        this.formData = { ...this.selectedPackage };
+      } else {
+        
+        this.formData = {
+          id: this.selectedPackage.id,
+          titulo: '',
+          informacion: '',
+          foto_url: '',
+          precio: 0,
+          tipo: '',
+        };
+      }
+    }
+  },
 
     async confirmDelete() {
       try {
@@ -107,5 +136,45 @@ export default {
 <style scoped>
   .form-group {
     margin-bottom: 15px;
+  }
+
+  .submit-button,
+  .delete-button,
+  .cancel-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-right:5px ;
+    margin-bottom: 5px;
+  }
+
+  .submit-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+  }
+
+  .delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+  }
+
+  .cancel-button {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+  }
+
+  .submit-button:hover,
+  .delete-button:hover,
+  .cancel-button:hover {
+    background-color: #45a049;
   }
 </style>

@@ -8,7 +8,8 @@
         <img :src="require(`../assets/images/${offer.foto_url}`)" :alt="`Oferta ${offer.id}`">
         <h3>{{ offer.titulo }}</h3>
         <p>{{ offer.informacion }}</p>
-        <a @click="editPackage(offer)">Editar</a>
+        <a @click="editOfferPackage(offer)">Editar</a>
+        <a @click="confirmDelete(offer)">Eliminar</a>
       </div>
     </div>
 
@@ -19,7 +20,8 @@
       @addPackage="addPackage"
       @editPackage="editPackage"
       @deletePackage="deletePackage"
-      @switchMode="switchMode"
+      :switchMode="switchMode"
+      :editOfferPackage="editOfferPackage"
     />
   </section>
 </template>
@@ -84,39 +86,24 @@ export default {
     },
 
     editOfferPackage(offer) {
-      this.selectedPackage = offer;
-      this.switchMode('edit');
-    },
-
-    async addPackage(formData) {
-      try {
-        await ApiService.post('paquetes', formData);
-        this.resetFormAndSwitchMode('add');
-        this.fetchOffers(this.tipoDePaquete);
-      } catch (error) {
-        console.error('Error al agregar paquete:', error);
+      if (offer) {
+        this.selectedPackage = { ...offer };  // Hacemos una copia para evitar la referencia directa
+        this.switchMode('edit');
+      } else {
+        console.error('Error: El paquete seleccionado es nulo.');
       }
     },
 
-    async editPackage(formData) {
-      try {
-        await ApiService.put('paquetes', this.selectedPackage.id, formData);
-        this.resetFormAndSwitchMode('add');
-        this.fetchOffers(this.tipoDePaquete);
-      } catch (error) {
-        console.error('Error al editar paquete:', error);
+    confirmDelete(offer) {
+      if (offer) {
+        this.selectedPackage = offer;
+        this.switchMode('delete');
+      } else {
+        console.error('Error: El paquete seleccionado para eliminar es nulo.');
       }
     },
 
-    async deletePackage() {
-      try {
-        await ApiService.delete('paquetes', this.selectedPackage.id);
-        this.resetFormAndSwitchMode('add');
-        this.fetchOffers(this.tipoDePaquete);
-      } catch (error) {
-        console.error('Error al eliminar paquete:', error);
-      }
-    },
+    // ... (otros métodos, por ejemplo, addPackage, editPackage, deletePackage)
 
     resetFormAndSwitchMode(newMode) {
       this.$refs.PaqueteForm.resetFormAndSwitchMode(newMode);
