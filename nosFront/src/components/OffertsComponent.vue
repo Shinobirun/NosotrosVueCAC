@@ -8,20 +8,32 @@
         <img :src="require(`../assets/images/${offer.foto_url}`)" :alt="`Oferta ${offer.id}`">
         <h3>{{ offer.titulo }}</h3>
         <p>{{ offer.informacion }}</p>
-        <a :href="`./tours/${offer.tipo.toLowerCase()}.html?id=${offer.id}`">Ver más</a>
+        <a @click="editPackage(offer)">Editar</a>
       </div>
     </div>
+
+    <!-- Componente CRUD -->
+    <PaqueteForm
+      :mode="crudMode"
+      :selectedPackage="selectedPackage"
+      @addPackage="addPackage"
+      @editPackage="editPackage"
+      @deletePackage="deletePackage"
+      @switchMode="switchMode"
+    />
   </section>
 </template>
 
 <script>
 import ApiService from '../services/apiService';
-import LoaderComponent from'./LoaderComponet.vue';
+import LoaderComponent from './LoaderComponet.vue';
+import PaqueteForm from './PaqueteForm.vue';
 
 export default {
   name: 'OfferComponent',
   components: {
     LoaderComponent,
+    PaqueteForm,
   },
   props: {
     tipoDePaquete: {
@@ -37,6 +49,8 @@ export default {
     return {
       offers: [],
       loading: true,
+      crudMode: 'add',
+      selectedPackage: null,
     };
   },
   computed: {
@@ -67,6 +81,49 @@ export default {
         .catch((error) => {
           console.error('Error al obtener ofertas:', error);
         });
+    },
+
+    editOfferPackage(offer) {
+      this.selectedPackage = offer;
+      this.switchMode('edit');
+    },
+
+    async addPackage(formData) {
+      try {
+        await ApiService.post('paquetes', formData);
+        this.resetFormAndSwitchMode('add');
+        this.fetchOffers(this.tipoDePaquete);
+      } catch (error) {
+        console.error('Error al agregar paquete:', error);
+      }
+    },
+
+    async editPackage(formData) {
+      try {
+        await ApiService.put('paquetes', this.selectedPackage.id, formData);
+        this.resetFormAndSwitchMode('add');
+        this.fetchOffers(this.tipoDePaquete);
+      } catch (error) {
+        console.error('Error al editar paquete:', error);
+      }
+    },
+
+    async deletePackage() {
+      try {
+        await ApiService.delete('paquetes', this.selectedPackage.id);
+        this.resetFormAndSwitchMode('add');
+        this.fetchOffers(this.tipoDePaquete);
+      } catch (error) {
+        console.error('Error al eliminar paquete:', error);
+      }
+    },
+
+    resetFormAndSwitchMode(newMode) {
+      this.$refs.PaqueteForm.resetFormAndSwitchMode(newMode);
+    },
+
+    switchMode(newMode) {
+      this.crudMode = newMode;
     },
   },
 };
