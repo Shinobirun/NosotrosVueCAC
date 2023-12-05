@@ -16,12 +16,13 @@ export default {
     return axios.post(`${BASE_URL}/${resource}/`, data);
   },
   
-  put(resource, data) {
-    return axios.put(`${BASE_URL}/${resource}/`, data);
+  // Modificada para incluir el ID en la URL
+  put(resource, id, data) {
+    return axios.put(`${BASE_URL}/${resource}/${id}/`, data);
   },
   
-  delete(resource) {
-    return axios.delete(`${BASE_URL}/${resource}/`);
+  // Modificada para incluir el ID en la URL
+  delete(resource, id) {
+    return axios.delete(`${BASE_URL}/${resource}/${id}/`);
   },
-  
 };
