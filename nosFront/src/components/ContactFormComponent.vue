@@ -72,7 +72,7 @@ export default {
         .then(response => response.json())
         .then(data => {
           console.log(data);
-          // You can handle the response from the FormSubmit service here
+          
         })
         .catch(error => console.error('Error:', error));
     },
@@ -142,7 +142,7 @@ textarea {
   padding: 10px;
   margin: 10px 0;
   font-size: 16px;
-  transition: filter 0.3s; /* Transición suave en el hover */
+  transition: filter 0.3s; 
   color:black;
   opacity: 1;
 }
