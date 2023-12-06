@@ -76,15 +76,19 @@ WSGI_APPLICATION = 'nosvueDJ.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+import mysql.connector.django
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DATABASE_NAME'),
+        'ENGINE': 'mysql.connector.django',
+        'NAME': config('DATABASE_NAME', default='bzvf0zd9i19jo0k4jo5e'),
         'USER': config('DATABASE_USER'),
         'PASSWORD': config('DATABASE_PASSWORD'),
         'HOST': config('DATABASE_HOST'),
         'PORT': config('DATABASE_PORT'),
+        'OPTIONS': {
+          'autocommit': True,
+      },
     }
 }
 
